@@ -10,6 +10,7 @@ export class CoffeeController {
   }
   @Get()
   findAll(@Query() paginationQuery) {
+    //https://localhost/coffee/limit=20&offset=10
     const {limit, offset } = paginationQuery; 
     return this.coffeeService.findAll();
   }
