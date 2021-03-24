@@ -1,7 +1,8 @@
-import { UpdateCoffeeDto } from './dto/update-coffee.dto';
-import { CreateCoffeeDto } from './dto/create-coffee.dto';
-import { CoffeeServiceService } from './../coffee-service/coffee-service.service';
 import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
+import { CoffeeServiceService } from './../coffee-service/coffee-service.service';
+import { PaginationDto } from './../common/dto/pagination.dto';
+import { CreateCoffeeDto } from './dto/create-coffee.dto';
+import { UpdateCoffeeDto } from './dto/update-coffee.dto';
 
 @Controller('coffee')
 export class CoffeeController {
@@ -9,10 +10,10 @@ export class CoffeeController {
 
   }
   @Get()
-  findAll(@Query() paginationQuery) {
+  findAll(@Query() paginationQuery: PaginationDto) {
     //https://localhost/coffee/limit=20&offset=10
-    const {limit, offset } = paginationQuery; 
-    return this.coffeeService.findAll();
+    // const {limit, offset } = paginationQuery; 
+    return this.coffeeService.findAll(paginationQuery);
   }
 
   @Get(':id')
@@ -27,7 +28,7 @@ export class CoffeeController {
   }
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateCoffe: UpdateCoffeeDto) {
-    return this.coffeeService.update(id, updateCoffe );
+    return this.coffeeService.update(id, updateCoffe);
   }
 
   @Delete(':id')
@@ -35,5 +36,5 @@ export class CoffeeController {
     return this.coffeeService.remove(id);
   }
 
-  
+
 }
